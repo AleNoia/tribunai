@@ -1,0 +1,17 @@
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anon
+SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role
+
+# DataJud API
+DATAJUD_API_KEY=sua_chave_api_datajud
+
+# Cron Job Security
+# Gerar com: openssl rand -base64 32
+CRON_SECRET=seu_token_secreto_para_cron
+
+# Stripe (se usar pagamentos)
+STRIPE_SECRET_KEY=sua_chave_stripe
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=sua_chave_publica_stripe
+STRIPE_WEBHOOK_SECRET=seu_webhook_secret
+

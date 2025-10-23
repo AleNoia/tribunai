@@ -59,8 +59,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
-      <div className="flex gap-2">
+    <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
+      <div className="flex gap-3">
         <Input
           type="text"
           placeholder="Digite o número do processo (ex: 0000000-00.0000.0.00.0000)"
@@ -73,11 +73,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           type="submit"
           disabled={isLoading || numeroProcesso.length < 20}
         >
-          <Search className="mr-2 h-4 w-4" />
+          <Search className="h-4 w-4" />
           {isLoading ? "Buscando..." : "Buscar"}
         </Button>
       </div>
-      <p className="text-sm text-muted-foreground mt-2">
+      <p className="text-sm text-muted-foreground mt-3 text-center">
         Informe o número CNJ com 20 dígitos
       </p>
     </form>

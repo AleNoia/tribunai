@@ -32,6 +32,11 @@ export interface DataJudProcesso {
     nome: string
   }>
   movimentos?: DataJudMovimento[]
+  partes?: {
+    autor?: string[]
+    reu?: string[]
+    [key: string]: string[] | undefined
+  }
 }
 
 export interface DataJudResponse {

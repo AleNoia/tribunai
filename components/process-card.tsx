@@ -16,26 +16,37 @@ interface ProcessCardProps {
 
 export function ProcessCard({ processo }: ProcessCardProps) {
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className="w-full max-w-5xl mx-auto space-y-6">
       {/* Dados Básicos do Processo */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl flex items-center gap-2">
-            <Scale className="h-6 w-6" />
-            Processo {formatarNumeroProcesso(processo.numeroProcesso)}
+        <CardHeader className="space-y-3">
+          <CardTitle className="text-xl font-semibold flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-md">
+              <Scale className="h-5 w-5 text-foreground" aria-hidden="true" />
+            </div>
+            <span>
+              Processo {formatarNumeroProcesso(processo.numeroProcesso)}
+            </span>
           </CardTitle>
           <CardDescription>
             Informações básicas do processo judicial
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {processo.classe && (
-              <div className="flex items-start gap-2">
-                <FileText className="h-5 w-5 mt-0.5 text-muted-foreground" />
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-muted rounded-md">
+                  <FileText
+                    className="h-4 w-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </div>
                 <div>
-                  <p className="text-sm font-medium">Classe</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs font-medium text-muted-foreground mb-1">
+                    Classe
+                  </p>
+                  <p className="text-base font-medium">
                     {processo.classe.nome}
                   </p>
                 </div>
@@ -43,23 +54,35 @@ export function ProcessCard({ processo }: ProcessCardProps) {
             )}
 
             {processo.tribunal && (
-              <div className="flex items-start gap-2">
-                <Building2 className="h-5 w-5 mt-0.5 text-muted-foreground" />
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-muted rounded-md">
+                  <Building2
+                    className="h-4 w-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </div>
                 <div>
-                  <p className="text-sm font-medium">Tribunal</p>
-                  <p className="text-sm text-muted-foreground">
-                    {processo.tribunal}
+                  <p className="text-xs font-medium text-muted-foreground mb-1">
+                    Tribunal
                   </p>
+                  <p className="text-base font-medium">{processo.tribunal}</p>
                 </div>
               </div>
             )}
 
             {processo.dataAjuizamento && (
-              <div className="flex items-start gap-2">
-                <Calendar className="h-5 w-5 mt-0.5 text-muted-foreground" />
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-muted rounded-md">
+                  <Calendar
+                    className="h-4 w-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </div>
                 <div>
-                  <p className="text-sm font-medium">Data de Ajuizamento</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs font-medium text-muted-foreground mb-1">
+                    Data de Ajuizamento
+                  </p>
+                  <p className="text-base font-medium">
                     {formatarData(processo.dataAjuizamento)}
                   </p>
                 </div>
@@ -67,33 +90,46 @@ export function ProcessCard({ processo }: ProcessCardProps) {
             )}
 
             {processo.grau && (
-              <div className="flex items-start gap-2">
-                <Scale className="h-5 w-5 mt-0.5 text-muted-foreground" />
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-muted rounded-md">
+                  <Scale
+                    className="h-4 w-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </div>
                 <div>
-                  <p className="text-sm font-medium">Grau</p>
-                  <p className="text-sm text-muted-foreground">
-                    {processo.grau}
+                  <p className="text-xs font-medium text-muted-foreground mb-1">
+                    Grau
                   </p>
+                  <p className="text-base font-medium">{processo.grau}</p>
                 </div>
               </div>
             )}
           </div>
 
           {processo.orgaoJulgador && (
-            <div>
-              <p className="text-sm font-medium mb-1">Órgão Julgador</p>
-              <p className="text-sm text-muted-foreground">
+            <div className="pt-4">
+              <p className="text-xs font-medium text-muted-foreground mb-2">
+                Órgão Julgador
+              </p>
+              <p className="text-base font-medium">
                 {processo.orgaoJulgador.nome}
               </p>
             </div>
           )}
 
           {processo.assuntos && processo.assuntos.length > 0 && (
-            <div>
-              <p className="text-sm font-medium mb-2">Assuntos</p>
+            <div className="pt-4">
+              <p className="text-xs font-medium text-muted-foreground mb-3">
+                Assuntos
+              </p>
               <div className="flex flex-wrap gap-2">
                 {processo.assuntos.map((assunto, index) => (
-                  <Badge key={index} variant="secondary">
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="font-normal"
+                  >
                     {assunto.nome}
                   </Badge>
                 ))}
@@ -106,44 +142,46 @@ export function ProcessCard({ processo }: ProcessCardProps) {
       {/* Movimentações */}
       {processo.movimentos && processo.movimentos.length > 0 && (
         <Card>
-          <CardHeader>
-            <CardTitle>Movimentações Processuais</CardTitle>
+          <CardHeader className="space-y-3">
+            <CardTitle className="text-xl font-semibold">
+              Movimentações Processuais
+            </CardTitle>
             <CardDescription>
               {processo.movimentos.length} movimentação(ões) encontrada(s)
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {processo.movimentos.map((movimento, index) => (
-                <div
+                <article
                   key={index}
-                  className="border-l-2 border-primary pl-4 py-2 hover:bg-muted/50 transition-colors rounded-r-lg"
+                  className="border-l-2 border-primary pl-4 py-3 hover:bg-muted/50 transition-colors duration-200 rounded-r-md"
                 >
                   <div className="flex items-start justify-between gap-4 flex-wrap">
                     <div className="flex-1">
-                      <p className="font-medium text-sm">{movimento.nome}</p>
+                      <p className="font-medium text-base">{movimento.nome}</p>
                       {movimento.complementosTabelados &&
                         movimento.complementosTabelados.length > 0 && (
-                          <div className="mt-2 space-y-1">
+                          <ul className="mt-3 space-y-1 list-none">
                             {movimento.complementosTabelados.map(
                               (complemento, idx) => (
-                                <p
+                                <li
                                   key={idx}
                                   className="text-sm text-muted-foreground pl-4"
                                 >
                                   • {complemento.descricao}
-                                </p>
+                                </li>
                               )
                             )}
-                          </div>
+                          </ul>
                         )}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
-                      <Calendar className="h-4 w-4" />
+                    <time className="flex items-center gap-2 text-xs text-muted-foreground whitespace-nowrap bg-muted px-3 py-1.5 rounded-md">
+                      <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
                       {formatarData(movimento.dataHora)}
-                    </div>
+                    </time>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </CardContent>

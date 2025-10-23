@@ -1,5 +1,92 @@
 import { ProcessoSearchResult } from "./types"
+import { obterUrlTribunal, obterNomeTribunal } from "./tribunais"
 
+/**
+ * Busca processo diretamente na API do DataJud
+ * Deve ser usado APENAS no servidor (API routes)
+ */
+export async function buscarProcessoDataJud(numeroProcesso: string): Promise<ProcessoSearchResult> {
+  try {
+    // Remove caracteres especiais do número do processo
+    const numeroLimpo = numeroProcesso.replace(/\D/g, "");
+
+    if (numeroLimpo.length !== 20) {
+      return {
+        success: false,
+        error: "Número de processo inválido. Deve conter 20 dígitos.",
+      };
+    }
+
+    // Obtém a URL do tribunal baseado no código no número do processo
+    const apiUrl = obterUrlTribunal(numeroLimpo);
+
+    // Usar variável de ambiente
+    const apiKey = process.env.DATAJUD_API_KEY;
+    
+    if (!apiKey) {
+      return {
+        success: false,
+        error: "DATAJUD_API_KEY não configurada",
+      };
+    }
+
+    const query = {
+      query: {
+        match: {
+          numeroProcesso: numeroLimpo,
+        },
+      },
+    };
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `APIKey ${apiKey}`,
+      },
+      body: JSON.stringify(query),
+    });
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: `Erro na API: ${response.status} - ${response.statusText}`,
+      };
+    }
+
+    const data = await response.json();
+
+    if (data.hits.total.value === 0) {
+      return {
+        success: false,
+        error: "Processo não encontrado.",
+      };
+    }
+
+    const processo = data.hits.hits[0]._source;
+
+    // Adiciona o nome do tribunal se não estiver presente
+    if (!processo.tribunal) {
+      processo.tribunal = obterNomeTribunal(numeroLimpo);
+    }
+
+    return {
+      success: true,
+      processo,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar processo:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Erro desconhecido ao buscar processo.",
+    };
+  }
+}
+
+/**
+ * Busca processo através da API route do Next.js
+ * Deve ser usado APENAS no cliente (componentes React)
+ */
 export async function buscarProcesso(numeroProcesso: string): Promise<ProcessoSearchResult> {
   try {
     // Chama a API Route do Next.js ao invés de chamar a API do DataJud diretamente

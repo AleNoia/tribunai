@@ -29,12 +29,24 @@ export async function POST(request: NextRequest) {
       },
     };
 
+    // ✅ SOLUÇÃO: Usar variável de ambiente
+    const apiKey = process.env.DATAJUD_API_KEY;
+    
+    if (!apiKey) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "DATAJUD_API_KEY não configurada",
+        },
+        { status: 500 }
+      );
+    }
+
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "APIKey cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==",
+        Authorization: `APIKey ${apiKey}`,
       },
       body: JSON.stringify(query),
     });

@@ -5,6 +5,8 @@ import { SearchForm } from "@/components/search-form";
 import { ProcessCard } from "@/components/process-card";
 import { ProcessSkeleton } from "@/components/process-skeleton";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { UserNav } from "@/components/auth/user-nav";
+import { NotificationBell } from "@/components/notificacoes/NotificationBell";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { buscarProcesso } from "@/lib/datajud";
 import { DataJudProcesso } from "@/lib/types";
@@ -32,20 +34,26 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-12 max-w-7xl">
         {/* Header */}
-        <header className="flex items-center justify-between mb-12">
-          <div className="flex items-center gap-3">
-            <Scale className="h-8 w-8" />
+        <header className="flex items-center justify-between mb-16 pb-6 border-b border-border">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-primary/10 rounded-md">
+              <Scale className="h-6 w-6 text-foreground" aria-hidden="true" />
+            </div>
             <div>
-              <h1 className="text-3xl font-bold">DataJud CNJ</h1>
-              <p className="text-sm text-muted-foreground">
+              <h1 className="text-2xl font-semibold">DataJud CNJ</h1>
+              <p className="text-sm text-muted-foreground mt-1">
                 Consulta Processual
               </p>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <UserNav />
+            <ThemeToggle />
+          </div>
         </header>
 
         {/* Search Section */}
@@ -70,9 +78,14 @@ export default function Home() {
           {processo && !isLoading && <ProcessCard processo={processo} />}
 
           {!processo && !error && !isLoading && (
-            <div className="text-center text-muted-foreground mt-16">
-              <Scale className="h-16 w-16 mx-auto mb-4 opacity-20" />
-              <p className="text-lg">
+            <div className="text-center text-muted-foreground mt-24 px-4">
+              <div className="p-6 bg-muted/50 rounded-lg inline-block mb-4">
+                <Scale
+                  className="h-12 w-12 mx-auto text-muted-foreground/40"
+                  aria-hidden="true"
+                />
+              </div>
+              <p className="text-base font-medium text-foreground">
                 Digite um número de processo para iniciar a consulta
               </p>
               <p className="text-sm mt-2">
@@ -84,7 +97,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 py-6 border-t">
+      <footer className="mt-24 py-6 border-t border-border">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>
             Powered by DataJud - API Pública do Conselho Nacional de Justiça
