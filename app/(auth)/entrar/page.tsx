@@ -116,162 +116,164 @@ export default function EntrarPage() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 border-3 border-gray-200/40 shadow-2xl shadow-gray-500/10 p-10 rounded-3xl relative">
+        <div className="absolute top-0 left-0 w-full h-1/4 bg-gradient-to-b from-primary/20 to-white rounded-[1.3rem]"></div>
         {/* Logo/Header */}
-        <header className="text-center">
-          <Link
-            href="/"
-            className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg"
-          >
-            <div className="flex items-center justify-center gap-3">
-              <div className="p-3 bg-primary/10 rounded-md">
-                <Scale className="h-8 w-8 text-foreground" aria-hidden="true" />
+        <div className="relative z-10">
+          <header className="text-center">
+            <Link
+              href="/"
+              className="inline-block mb-4 focus:outline-none focus:ring-2 focus:ring-primary rounded-2xl border-7 border-white shadow-2xl shadow-primary/20"
+            >
+              <div className="p-5 rounded-xl bg-gradient-to-tr from-primary/80 to-primary/40">
+                <Scale className="h-8 w-8 text-white" aria-hidden="true" />
               </div>
-              <h1 className="text-2xl font-semibold">DataJud CNJ</h1>
-            </div>
-          </Link>
-          <h2 className="text-2xl font-semibold mt-4">Entrar</h2>
-          <p className="text-sm text-muted-foreground mt-2">
-            Faça login para acessar sua conta
-          </p>
-        </header>
+            </Link>
+            <h2 className="text-2xl font-bold mt-4">Entrar</h2>
+            <p className="text-sm text-muted-foreground mt-2">
+              Faça login para acessar sua conta
+            </p>
+          </header>
 
-        {/* Error Alert */}
-        {rootError && (
-          <Alert
-            variant="destructive"
-            className="animate-in fade-in slide-in-from-top-2 duration-300"
-          >
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{rootError}</AlertDescription>
-          </Alert>
-        )}
-
-        {/* Form */}
-        <form onSubmit={onSubmit} className="space-y-6" noValidate>
-          {/* Email Field */}
-          <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-medium text-foreground"
+          {/* Error Alert */}
+          {rootError && (
+            <Alert
+              variant="destructive"
+              className="animate-in fade-in slide-in-from-top-2 duration-300"
             >
-              Email
-            </label>
-            <div className="relative">
-              <Mail
-                className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
-                aria-hidden="true"
-              />
-              <Input
-                id="email"
-                type="email"
-                placeholder="seu@email.com"
-                autoComplete="email"
-                {...form.register("email")}
-                disabled={isLoading}
-                className="pl-10"
-                aria-invalid={!!form.formState.errors.email}
-                aria-describedby={
-                  form.formState.errors.email ? "email-error" : undefined
-                }
-              />
-            </div>
-            {form.formState.errors.email && (
-              <p
-                id="email-error"
-                className="text-sm text-destructive animate-in fade-in slide-in-from-top-1 duration-200"
-                role="alert"
-              >
-                {form.formState.errors.email.message}
-              </p>
-            )}
-          </div>
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{rootError}</AlertDescription>
+            </Alert>
+          )}
 
-          {/* Password Field */}
-          <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-foreground"
-            >
-              Senha
-            </label>
-            <div className="relative">
-              <Lock
-                className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
-                aria-hidden="true"
-              />
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                autoComplete="current-password"
-                {...form.register("password")}
-                disabled={isLoading}
-                className="pl-10 pr-10"
-                aria-invalid={!!form.formState.errors.password}
-                aria-describedby={
-                  form.formState.errors.password ? "password-error" : undefined
-                }
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                disabled={isLoading}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
-                tabIndex={0}
+          {/* Form */}
+          <form onSubmit={onSubmit} className="space-y-6" noValidate>
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-foreground"
               >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <Eye className="h-4 w-4" aria-hidden="true" />
-                )}
-              </button>
-            </div>
-            {form.formState.errors.password && (
-              <p
-                id="password-error"
-                className="text-sm text-destructive animate-in fade-in slide-in-from-top-1 duration-200"
-                role="alert"
-              >
-                {form.formState.errors.password.message}
-              </p>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full h-12 text-base"
-          >
-            {isLoading ? (
-              <>
-                <Loader2
-                  className="mr-2 h-4 w-4 animate-spin"
+                Email
+              </label>
+              <div className="relative">
+                <Mail
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
                   aria-hidden="true"
                 />
-                Entrando...
-              </>
-            ) : (
-              "Entrar"
-            )}
-          </Button>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  autoComplete="email"
+                  {...form.register("email")}
+                  disabled={isLoading}
+                  className="pl-10"
+                  aria-invalid={!!form.formState.errors.email}
+                  aria-describedby={
+                    form.formState.errors.email ? "email-error" : undefined
+                  }
+                />
+              </div>
+              {form.formState.errors.email && (
+                <p
+                  id="email-error"
+                  className="text-sm text-destructive animate-in fade-in slide-in-from-top-1 duration-200"
+                  role="alert"
+                >
+                  {form.formState.errors.email.message}
+                </p>
+              )}
+            </div>
 
-          {/* Footer Links */}
-          <div className="space-y-3 text-center">
-            <p className="text-sm text-muted-foreground">
-              Não tem conta?{" "}
-              <Link
-                href="/cadastrar"
-                className="font-medium text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
-                tabIndex={0}
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-foreground"
               >
-                Cadastrar-se
-              </Link>
-            </p>
-          </div>
-        </form>
+                Senha
+              </label>
+              <div className="relative">
+                <Lock
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
+                  aria-hidden="true"
+                />
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  {...form.register("password")}
+                  disabled={isLoading}
+                  className="pl-10 pr-10"
+                  aria-invalid={!!form.formState.errors.password}
+                  aria-describedby={
+                    form.formState.errors.password
+                      ? "password-error"
+                      : undefined
+                  }
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                  tabIndex={0}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Eye className="h-4 w-4" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+              {form.formState.errors.password && (
+                <p
+                  id="password-error"
+                  className="text-sm text-destructive animate-in fade-in slide-in-from-top-1 duration-200"
+                  role="alert"
+                >
+                  {form.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-12 text-base"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2
+                    className="mr-2 h-4 w-4 animate-spin"
+                    aria-hidden="true"
+                  />
+                  Entrando...
+                </>
+              ) : (
+                "Entrar"
+              )}
+            </Button>
+
+            {/* Footer Links */}
+            <div className="space-y-3 text-center">
+              <p className="text-sm text-muted-foreground">
+                Não tem conta?{" "}
+                <Link
+                  href="/cadastrar"
+                  className="font-medium text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+                  tabIndex={0}
+                >
+                  Cadastrar-se
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
